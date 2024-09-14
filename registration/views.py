@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .forms import UserInfoForm
 from .models import UserInfo
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import UserInfoSerializer
 
 def generate_unique_user_id():
     while True:
@@ -23,3 +26,10 @@ def registration_api(request):
     else:
         form = UserInfoForm()
     return render(request, 'registration/registrationForm.html', {'form': form})
+
+
+@api_view(['GET'])
+def user_list_api(request):
+    users = UserInfo.objects.all()
+    serializer = UserInfoSerializer(users, many=True)
+    return Response(serializer.data)
