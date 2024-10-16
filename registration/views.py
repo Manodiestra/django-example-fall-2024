@@ -5,6 +5,8 @@ from .forms import UserInfoForm
 from .models import UserInfo
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 from .serializers import UserInfoSerializer
 
 def generate_unique_user_id():
@@ -33,3 +35,15 @@ def user_list_api(request):
     users = UserInfo.objects.all()
     serializer = UserInfoSerializer(users, many=True)
     return Response(serializer.data)
+
+
+class AddUser(APIView):
+    def post(self, request):
+        data = request.data
+        data['UserID'] = generate_unique_user_id()
+        serializer = UserInfoSerializer(data=data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

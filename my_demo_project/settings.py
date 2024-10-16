@@ -27,11 +27,12 @@ SECRET_KEY = 'django-insecure-c*5^5m$nm6piv60dly!kmg^p-r5+70zp#onow$3!b313#-po8y
 DEBUG = True
 
 # DEV ONLY
+CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ["*"]
 CSRF_COOKIE_SECURE = False # Helps with non https requests in dev
 CSRF_COOKIE_SAMESITE = None # Helps avoid issues with cookies in dev
 CSRF_TRUSTED_ORIGINS = [
-    'https://' + os.environ['C9_HOSTNAME'],
+    'https://localhost',
 ]
 
 # Application definition
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'hello',
     'registration',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'my_demo_project.urls'
