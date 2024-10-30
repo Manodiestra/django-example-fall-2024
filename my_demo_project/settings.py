@@ -86,10 +86,20 @@ WSGI_APPLICATION = 'my_demo_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+RDS_PASSWORD = ''
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        ## For RDS connection:
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'userformdata-fall-24',
+        'USER': 'admin',
+        'PASSWORD': '',
+        'HOST': 'userformdata-fall-24.cqqdvon2b2h9.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',  # Default port for MySQL
+        ## For local SQLite connection:
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

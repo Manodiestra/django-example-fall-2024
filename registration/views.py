@@ -38,6 +38,12 @@ def user_list_api(request):
 
 
 class AddUser(APIView):
+    def get(self, request):
+        # Get all users
+        users = UserInfo.objects.all()
+        serializer = UserInfoSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def post(self, request):
         data = request.data
         data['UserID'] = generate_unique_user_id()
