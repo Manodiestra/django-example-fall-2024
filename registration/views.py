@@ -6,8 +6,15 @@ from .models import UserInfo
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .serializers import UserInfoSerializer
+
+class HelloWorldView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"message": "Hello, World!"})
 
 def generate_unique_user_id():
     while True:
@@ -38,6 +45,8 @@ def user_list_api(request):
 
 
 class AddUser(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         # Get all users
         users = UserInfo.objects.all()
